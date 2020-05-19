@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Form from "./Form";
-import TeamMember from "./TeamList";
+import TeamList from "./TeamList";
 
 const initialTeamList = [
   {
@@ -18,6 +18,7 @@ const initialFormValues = {
 
 const App = () => {
   const [team, setTeam] = useState(initialTeamList);
+  console.log("App -> team", team);
   const [formValues, setFormValues] = useState(initialFormValues);
 
   const onInputChange = (event) => {
@@ -29,9 +30,9 @@ const App = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     if (
-      formValues.username.trim() ||
-      formValues.email.trim() ||
-      formValues.role.trim()
+      !formValues.username.trim() ||
+      !formValues.email.trim() ||
+      !formValues.role.trim()
     ) {
       return;
     }
@@ -48,6 +49,9 @@ const App = () => {
         onInputChange={onInputChange}
         onSubmit={onSubmit}
       />
+      {team.map((teamMember) => {
+        return <TeamList key={teamMember.id} details={teamMember} />;
+      })}
     </div>
   );
 };
